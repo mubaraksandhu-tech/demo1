@@ -33,6 +33,15 @@
       cursor: pointer; text-decoration: none; font-weight: 600;
     }
     .nav-cta:hover { background: #185FA5; color: #fff; }
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .nav-login {
+      font-size: 13px; padding: 6px 14px; color: #185FA5;
+      text-decoration: none; font-weight: 600; border-radius: 8px;
+    }
+    .nav-login:hover { background: #E6F1FB; }
+
+    html { scroll-behavior: smooth; }
+    .section[id], .cta-strip[id] { scroll-margin-top: 72px; }
 
     /* HERO */
     .hero {
@@ -156,13 +165,16 @@
       <span class="nav-name">Aldermoor University</span>
     </div>
     <div class="nav-links">
-      <a href="#">Academics</a>
-      <a href="#">Research</a>
-      <a href="#">Campus life</a>
-      <a href="#">Admissions</a>
-      <a href="#">About</a>
+      <a href="#academics">Academics</a>
+      <a href="#research">Research</a>
+      <a href="#campus-life">Campus life</a>
+      <a href="#admissions">Admissions</a>
+      <a href="#about">About</a>
     </div>
-    <a href="#" class="nav-cta">Apply now</a>
+    <div class="nav-actions">
+      <a href="#" class="nav-login" onclick="openAuthModal('signin'); return false;">Log in</a>
+      <a href="#" class="nav-cta" onclick="openAuthModal('signup'); return false;">Apply now</a>
+    </div>
   </nav>
 
   <!-- HERO -->
@@ -195,7 +207,7 @@
   </div>
 
   <!-- PROGRAMMES -->
-  <div class="section section-bg">
+  <div class="section section-bg" id="academics">
     <p class="section-label">Academics</p>
     <p class="section-title">Find your field</p>
     <div class="programs-grid">
@@ -244,8 +256,37 @@
     </div>
   </div>
 
+  <!-- CAMPUS LIFE -->
+  <div class="section" id="campus-life">
+    <p class="section-label">Campus life</p>
+    <p class="section-title">More than lectures</p>
+    <div class="programs-grid">
+      <div class="program-card">
+        <div class="program-icon" style="background:#E6F1FB;">
+          <i class="ti ti-home" style="color:#185FA5;font-size:18px;"></i>
+        </div>
+        <h3>Residences</h3>
+        <p>On-campus housing across 14 residence halls for first-year and returning students</p>
+      </div>
+      <div class="program-card">
+        <div class="program-icon" style="background:#EAF3DE;">
+          <i class="ti ti-ball-football" style="color:#3B6D11;font-size:18px;"></i>
+        </div>
+        <h3>Sport &amp; recreation</h3>
+        <p>Over 40 varsity and intramural teams, plus a full-service fitness centre</p>
+      </div>
+      <div class="program-card">
+        <div class="program-icon" style="background:#EEEDFE;">
+          <i class="ti ti-users" style="color:#534AB7;font-size:18px;"></i>
+        </div>
+        <h3>Clubs &amp; societies</h3>
+        <p>180+ student-run societies spanning academics, culture, and the arts</p>
+      </div>
+    </div>
+  </div>
+
   <!-- NEWS -->
-  <div class="section">
+  <div class="section" id="research">
     <p class="section-label">Latest from Aldermoor</p>
     <p class="section-title">News &amp; research</p>
     <div class="news-grid">
@@ -276,24 +317,26 @@
     </div>
   </div>
 
+  <!-- ABOUT -->
+  <div class="section section-bg" id="about">
+    <p class="section-label">About</p>
+    <p class="section-title">Nearly 140 years of academic tradition</p>
+    <p style="max-width:640px;font-size:14px;color:#555;line-height:1.7;">
+      Founded in 1887 in Oxford, England, Aldermoor University has grown from a single
+      teaching college into a research-intensive institution spanning six faculties.
+      Our mission is to advance knowledge and prepare graduates to lead with integrity,
+      curiosity, and a commitment to the public good.
+    </p>
+  </div>
+
   <!-- CTA -->
-  <div class="cta-strip">
+  <div class="cta-strip" id="admissions">
     <h2>Ready to join Aldermoor?</h2>
     <p>Applications for the 2026–27 academic year are now open.</p>
-    <a href="#" class="btn-primary">Start your application</a>
+    <a href="#" class="btn-primary" onclick="openAuthModal(); return false;">Start your application</a>
   </div>
 
   <!-- FOOTER -->
-  <footer>
-    <div class="footer-left">© 2026 Aldermoor University. All rights reserved.</div>
-    <div class="footer-links">
-      <a href="#">Privacy</a>
-      <a href="#">Accessibility</a>
-      <a href="#">Contact</a>
-      <a href="#">Sitemap</a>
-    </div>
-  </footer>
-    <!-- FOOTER -->
   <footer>
     <div class="footer-left">© 2026 Aldermoor University. All rights reserved.</div>
     <div class="footer-links">
@@ -340,8 +383,298 @@
   })();
   </script>
 
-</body>
-</html>
+  <!-- ===================== APPLY / AUTH MODAL ===================== -->
+  <style>
+    #authOverlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(4, 44, 83, 0.55);
+      align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    #authOverlay.open { display: flex; }
+
+    #authOverlay * { box-sizing: border-box; }
+
+    .auth-card {
+      width: 100%; max-width: 380px;
+      background: #fff;
+      border: 1px solid #dcd8d0;
+      border-radius: 4px;
+      padding: 40px 36px;
+      position: relative;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: #14171a;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .auth-close {
+      position: absolute; top: 14px; right: 16px;
+      background: none; border: none; cursor: pointer;
+      font-size: 20px; color: #6b6560; line-height: 1;
+      padding: 4px;
+    }
+    .auth-mark {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: #1f4b43; margin-bottom: 22px; position: relative;
+    }
+    .auth-mark::after {
+      content: ""; position: absolute; inset: 10px;
+      border-radius: 50%; background: #f7f6f3;
+    }
+    .auth-card h1 {
+      font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+      font-size: 26px; font-weight: 400; margin: 0 0 6px; letter-spacing: 0.2px;
+    }
+    .auth-card .sub { font-size: 13.5px; color: #6b6560; margin: 0 0 28px; line-height: 1.5; }
+    .auth-card form { display: flex; flex-direction: column; gap: 14px; }
+    .auth-card label {
+      font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em;
+      color: #6b6560; margin-bottom: 6px; display: block;
+    }
+    .auth-card .field { display: flex; flex-direction: column; }
+    .auth-card input[type="email"], .auth-card input[type="password"] {
+      border: 1px solid #dcd8d0; border-radius: 3px; padding: 11px 12px;
+      font-size: 14.5px; font-family: inherit; background: #f7f6f3;
+      color: #14171a; outline: none; transition: border-color 0.15s ease; width: 100%;
+    }
+    .auth-card input:focus { border-color: #1f4b43; box-shadow: 0 0 0 3px #e5efec; }
+    .auth-card button { cursor: pointer; border: none; border-radius: 3px; font-family: inherit; font-size: 14.5px; font-weight: 600; }
+    .auth-btn-primary { background: #1f4b43; color: #fff; padding: 12px; margin-top: 6px; width: 100%; }
+    .auth-btn-primary:hover { background: #163a33; }
+    .auth-btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+    .auth-btn-link { background: none; color: #1f4b43; padding: 0; font-weight: 500; text-decoration: underline; text-underline-offset: 2px; }
+    .auth-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; margin-top: 4px; }
+    .auth-toggle { text-align: center; font-size: 13.5px; color: #6b6560; margin-top: 22px; }
+    .auth-message { font-size: 13px; padding: 10px 12px; border-radius: 3px; margin-bottom: 16px; display: none; line-height: 1.4; }
+    .auth-message.error { display: block; background: #f8ece8; color: #a13d2a; }
+    .auth-message.success { display: block; background: #e5efec; color: #1f4b43; }
+    .auth-signed-in { text-align: center; }
+    .auth-signed-in .avatar {
+      width: 52px; height: 52px; border-radius: 50%; background: #e5efec; color: #1f4b43;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif; font-size: 20px; margin: 0 auto 16px;
+    }
+    .auth-signed-in .email-display { font-size: 14.5px; color: #14171a; margin-bottom: 24px; word-break: break-all; }
+    .auth-hidden { display: none !important; }
+    .auth-config-warning { font-size: 12px; color: #a13d2a; background: #f8ece8; padding: 10px 12px; border-radius: 3px; margin-bottom: 18px; line-height: 1.5; }
+  </style>
+
+  <div id="authOverlay" onclick="if(event.target===this) closeAuthModal();">
+    <div class="auth-card">
+      <button class="auth-close" onclick="closeAuthModal();" aria-label="Close">&times;</button>
+      <div class="auth-mark"></div>
+
+      <div id="configWarning" class="auth-config-warning auth-hidden">
+        Firebase config not set. Fill in <code>firebaseConfig</code> in the script below.
+      </div>
+
+      <div id="message" class="auth-message"></div>
+
+      <div id="authView">
+        <h1 id="formTitle">Sign in</h1>
+        <p class="sub" id="formSub">Welcome back. Enter your details to continue.</p>
+
+        <form id="authForm">
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" required autocomplete="email" />
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <input type="password" id="password" required autocomplete="current-password" minlength="6" />
+          </div>
+          <div class="auth-row">
+            <span></span>
+            <button type="button" class="auth-btn-link" id="forgotBtn">Forgot password?</button>
+          </div>
+          <button type="submit" class="auth-btn-primary" id="submitBtn">Sign in</button>
+        </form>
+
+        <p class="auth-toggle">
+          <span id="toggleText">Don't have an account?</span>
+          <button type="button" class="auth-btn-link" id="toggleBtn">Create one</button>
+        </p>
+      </div>
+
+      <div id="signedInView" class="auth-signed-in auth-hidden">
+        <div class="avatar" id="avatarInitial">•</div>
+        <div class="email-display" id="userEmail"></div>
+        <button class="auth-btn-primary" id="signOutBtn">Sign out</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      signOut,
+      sendPasswordResetEmail,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    // Your Firebase project config
+    const firebaseConfig = {
+      apiKey: "AIzaSyBjnLNN8BLm9sEJluPnlDhHwS3G9fGTFoA",
+      authDomain: "fir-def09.firebaseapp.com",
+      projectId: "fir-def09",
+      storageBucket: "fir-def09.firebasestorage.app",
+      messagingSenderId: "995080563939",
+      appId: "1:995080563939:web:dec983e691c0d065aee9d6",
+      measurementId: "G-SSE2P4WNEH"
+    };
+
+    const isConfigured = !Object.values(firebaseConfig).some(v => String(v).startsWith("YOUR_"));
+    if (!isConfigured) {
+      document.getElementById("configWarning").classList.remove("auth-hidden");
+    }
+
+    let app, auth;
+    if (isConfigured) {
+      app = initializeApp(firebaseConfig);
+      auth = getAuth(app);
+    }
+
+    let mode = "signin";
+
+    const authView = document.getElementById("authView");
+    const signedInView = document.getElementById("signedInView");
+    const authForm = document.getElementById("authForm");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const formTitle = document.getElementById("formTitle");
+    const formSub = document.getElementById("formSub");
+    const submitBtn = document.getElementById("submitBtn");
+    const toggleBtn = document.getElementById("toggleBtn");
+    const toggleText = document.getElementById("toggleText");
+    const forgotBtn = document.getElementById("forgotBtn");
+    const signOutBtn = document.getElementById("signOutBtn");
+    const messageEl = document.getElementById("message");
+    const userEmailEl = document.getElementById("userEmail");
+    const avatarInitial = document.getElementById("avatarInitial");
+
+    function showMessage(text, type) {
+      messageEl.textContent = text;
+      messageEl.className = "auth-message " + type;
+    }
+    function clearMessage() {
+      messageEl.className = "auth-message";
+      messageEl.textContent = "";
+    }
+
+    function setMode(next) {
+      mode = next;
+      clearMessage();
+      if (mode === "signin") {
+        formTitle.textContent = "Sign in";
+        formSub.textContent = "Welcome back. Enter your details to continue.";
+        submitBtn.textContent = "Sign in";
+        toggleText.textContent = "Don't have an account?";
+        toggleBtn.textContent = "Create one";
+        forgotBtn.classList.remove("auth-hidden");
+      } else {
+        formTitle.textContent = "Create account";
+        formSub.textContent = "Set an email and password to get started.";
+        submitBtn.textContent = "Create account";
+        toggleText.textContent = "Already have an account?";
+        toggleBtn.textContent = "Sign in";
+        forgotBtn.classList.add("auth-hidden");
+      }
+    }
+
+    toggleBtn.addEventListener("click", () => setMode(mode === "signin" ? "signup" : "signin"));
+
+    authForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!isConfigured) {
+        showMessage("Add your Firebase config before signing in.", "error");
+        return;
+      }
+      clearMessage();
+      submitBtn.disabled = true;
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      try {
+        if (mode === "signin") {
+          await signInWithEmailAndPassword(auth, email, password);
+        } else {
+          await createUserWithEmailAndPassword(auth, email, password);
+        }
+      } catch (err) {
+        showMessage(friendlyError(err), "error");
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+
+    forgotBtn.addEventListener("click", async () => {
+      const email = emailInput.value.trim();
+      if (!email) {
+        showMessage("Enter your email above first, then click Forgot password.", "error");
+        return;
+      }
+      try {
+        await sendPasswordResetEmail(auth, email);
+        showMessage("Password reset email sent. Check your inbox.", "success");
+      } catch (err) {
+        showMessage(friendlyError(err), "error");
+      }
+    });
+
+    signOutBtn.addEventListener("click", async () => {
+      await signOut(auth);
+    });
+
+    function friendlyError(err) {
+      const code = err.code || "";
+      const map = {
+        "auth/invalid-email": "That email address doesn't look right.",
+        "auth/user-not-found": "No account found with that email.",
+        "auth/wrong-password": "Incorrect password.",
+        "auth/invalid-credential": "Incorrect email or password.",
+        "auth/email-already-in-use": "An account with that email already exists.",
+        "auth/weak-password": "Password should be at least 6 characters.",
+        "auth/too-many-requests": "Too many attempts. Try again in a moment."
+      };
+      return map[code] || "Something went wrong. Please try again.";
+    }
+
+    if (isConfigured) {
+      onAuthStateChanged(auth, (user) => {
+        clearMessage();
+        if (user) {
+          authView.classList.add("auth-hidden");
+          signedInView.classList.remove("auth-hidden");
+          userEmailEl.textContent = user.email;
+          avatarInitial.textContent = (user.email || "?").charAt(0).toUpperCase();
+        } else {
+          authView.classList.remove("auth-hidden");
+          signedInView.classList.add("auth-hidden");
+          authForm.reset();
+        }
+      });
+    }
+
+    setMode("signin");
+
+    // Expose modal open/close globally so the onclick handlers on the buttons can reach them
+    window.openAuthModal = function (startMode) {
+      setMode(startMode === "signup" ? "signup" : "signin");
+      document.getElementById("authOverlay").classList.add("open");
+      document.body.style.overflow = "hidden";
+    };
+    window.closeAuthModal = function () {
+      document.getElementById("authOverlay").classList.remove("open");
+      document.body.style.overflow = "";
+    };
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") window.closeAuthModal();
+    });
+  </script>
 
 </body>
 </html>
