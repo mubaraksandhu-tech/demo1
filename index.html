@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aldermoor University</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; color: #1a1a1a; background: #fff; }
+
+    /* NAV */
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2rem; border-bottom: 1px solid #e5e5e5;
+      background: #fff; position: sticky; top: 0; z-index: 10;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-emblem {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: #185FA5; display: flex; align-items: center; justify-content: center;
+    }
+    .nav-emblem i { color: #E6F1FB; font-size: 18px; }
+    .nav-name { font-size: 15px; font-weight: 600; }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a {
+      font-size: 13px; color: #555; text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #1a1a1a; }
+    .nav-cta {
+      font-size: 13px; padding: 6px 16px; border-radius: 8px;
+      border: 1px solid #185FA5; color: #185FA5; background: transparent;
+      cursor: pointer; text-decoration: none; font-weight: 600;
+    }
+    .nav-cta:hover { background: #185FA5; color: #fff; }
+
+    /* HERO */
+    .hero {
+      background: #042C53; color: #E6F1FB;
+      padding: 5rem 2rem 4rem; text-align: center;
+    }
+    .hero-eyebrow {
+      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: #85B7EB; margin-bottom: 1rem;
+    }
+    .hero h1 {
+      font-size: 42px; font-weight: 600; line-height: 1.2;
+      color: #E6F1FB; max-width: 640px; margin: 0 auto 1.25rem;
+    }
+    .hero h1 em { font-style: normal; color: #85B7EB; }
+    .hero p {
+      font-size: 16px; color: #B5D4F4; max-width: 520px;
+      margin: 0 auto 2rem; line-height: 1.7;
+    }
+    .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      padding: 10px 24px; border-radius: 8px;
+      background: #378ADD; color: #E6F1FB; border: none; cursor: pointer;
+      font-size: 14px; font-weight: 600; text-decoration: none;
+    }
+    .btn-primary:hover { background: #2a6fb5; }
+    .btn-outline {
+      padding: 10px 24px; border-radius: 8px;
+      background: transparent; color: #B5D4F4;
+      border: 1px solid #378ADD; cursor: pointer;
+      font-size: 14px; text-decoration: none;
+    }
+    .btn-outline:hover { background: #185FA5; }
+    .hero-stats {
+      display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;
+      margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #185FA5;
+    }
+    .stat-item { text-align: center; }
+    .stat-num { font-size: 28px; font-weight: 600; color: #E6F1FB; }
+    .stat-label { font-size: 12px; color: #85B7EB; margin-top: 2px; }
+
+    /* SECTIONS */
+    .section { padding: 3.5rem 2rem; }
+    .section-bg { background: #f5f5f3; }
+    .section-label {
+      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: #888; margin-bottom: 0.5rem;
+    }
+    .section-title { font-size: 26px; font-weight: 600; margin-bottom: 2rem; }
+
+    /* PROGRAMS */
+    .programs-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px;
+    }
+    .program-card {
+      background: #fff; border: 1px solid #e5e5e5;
+      border-radius: 12px; padding: 1.25rem;
+      cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .program-card:hover { border-color: #378ADD; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+    .program-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 0.75rem;
+    }
+    .program-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .program-card p { font-size: 12px; color: #666; line-height: 1.5; }
+
+    /* NEWS */
+    .news-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;
+    }
+    .news-card {
+      background: #fff; border: 1px solid #e5e5e5;
+      border-radius: 12px; overflow: hidden;
+    }
+    .news-thumb {
+      height: 100px; display: flex; align-items: center;
+      justify-content: center; font-size: 32px;
+    }
+    .news-body { padding: 1rem; }
+    .news-tag {
+      font-size: 11px; padding: 2px 8px; border-radius: 8px;
+      display: inline-block; margin-bottom: 6px; font-weight: 600;
+    }
+    .news-body h3 { font-size: 13px; font-weight: 600; line-height: 1.5; margin-bottom: 4px; }
+    .news-body p { font-size: 12px; color: #888; }
+
+    /* CTA STRIP */
+    .cta-strip {
+      background: #0C447C; padding: 3rem 2rem; text-align: center;
+    }
+    .cta-strip h2 { font-size: 24px; font-weight: 600; color: #E6F1FB; margin-bottom: 0.75rem; }
+    .cta-strip p { font-size: 15px; color: #85B7EB; margin-bottom: 1.5rem; }
+
+    /* FOOTER */
+    footer {
+      background: #f5f5f3; border-top: 1px solid #e5e5e5;
+      padding: 2rem; display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-left { font-size: 13px; color: #888; }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 12px; color: #888; text-decoration: none; }
+    .footer-links a:hover { color: #1a1a1a; }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .hero h1 { font-size: 28px; }
+      .hero-stats { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav">
+    <div class="nav-logo">
+      <div class="nav-emblem"><i class="ti ti-building-arch"></i></div>
+      <span class="nav-name">Aldermoor University</span>
+    </div>
+    <div class="nav-links">
+      <a href="#">Academics</a>
+      <a href="#">Research</a>
+      <a href="#">Campus life</a>
+      <a href="#">Admissions</a>
+      <a href="#">About</a>
+    </div>
+    <a href="#" class="nav-cta">Apply now</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="hero-eyebrow">Founded 1887 &nbsp;·&nbsp; Oxford, England</p>
+    <h1>Where curiosity becomes <em>discovery</em></h1>
+    <p>Aldermoor University prepares students to lead, innovate, and shape a more equitable world — through research, collaboration, and a century of academic tradition.</p>
+    <div class="hero-btns">
+      <a href="#" class="btn-primary">Explore programmes</a>
+      <a href="#" class="btn-outline">Virtual campus tour</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">24,000+</div>
+        <div class="stat-label">Students enrolled</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">180+</div>
+        <div class="stat-label">Degree programmes</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">92%</div>
+        <div class="stat-label">Graduate employment rate</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">60+</div>
+        <div class="stat-label">Research centres</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROGRAMMES -->
+  <div class="section section-bg">
+    <p class="section-label">Academics</p>
+    <p class="section-title">Find your field</p>
+    <div class="programs-grid">
+      <div class="program-card">
+        <div class="program-icon" style="background:#E6F1FB;">
+          <i class="ti ti-microscope" style="color:#185FA5;font-size:18px;"></i>
+        </div>
+        <h3>Sciences</h3>
+        <p>Physics, biology, chemistry, and environmental sciences</p>
+      </div>
+      <div class="program-card">
+        <div class="program-icon" style="background:#EEEDFE;">
+          <i class="ti ti-code" style="color:#534AB7;font-size:18px;"></i>
+        </div>
+        <h3>Engineering &amp; Computing</h3>
+        <p>Software, civil, electrical, and mechanical engineering</p>
+      </div>
+      <div class="program-card">
+        <div class="program-icon" style="background:#EAF3DE;">
+          <i class="ti ti-chart-line" style="color:#3B6D11;font-size:18px;"></i>
+        </div>
+        <h3>Business &amp; Economics</h3>
+        <p>Finance, management, marketing, and global trade</p>
+      </div>
+      <div class="program-card">
+        <div class="program-icon" style="background:#FAEEDA;">
+          <i class="ti ti-book" style="color:#854F0B;font-size:18px;"></i>
+        </div>
+        <h3>Humanities</h3>
+        <p>History, philosophy, literature, and linguistics</p>
+      </div>
+      <div class="program-card">
+        <div class="program-icon" style="background:#FAECE7;">
+          <i class="ti ti-stethoscope" style="color:#993C1D;font-size:18px;"></i>
+        </div>
+        <h3>Medicine &amp; Health</h3>
+        <p>Clinical medicine, nursing, public health, and pharmacy</p>
+      </div>
+      <div class="program-card">
+        <div class="program-icon" style="background:#E1F5EE;">
+          <i class="ti ti-palette" style="color:#0F6E56;font-size:18px;"></i>
+        </div>
+        <h3>Arts &amp; Design</h3>
+        <p>Fine arts, graphic design, architecture, and film</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEWS -->
+  <div class="section">
+    <p class="section-label">Latest from Aldermoor</p>
+    <p class="section-title">News &amp; research</p>
+    <div class="news-grid">
+      <div class="news-card">
+        <div class="news-thumb" style="background:#E6F1FB;">🔬</div>
+        <div class="news-body">
+          <span class="news-tag" style="background:#E6F1FB;color:#0C447C;">Research</span>
+          <h3>Aldermoor team develops low-cost water purification method</h3>
+          <p>June 2026</p>
+        </div>
+      </div>
+      <div class="news-card">
+        <div class="news-thumb" style="background:#EAF3DE;">🏆</div>
+        <div class="news-body">
+          <span class="news-tag" style="background:#EAF3DE;color:#27500A;">Award</span>
+          <h3>Professor Nkosi receives Royal Society fellowship</h3>
+          <p>May 2026</p>
+        </div>
+      </div>
+      <div class="news-card">
+        <div class="news-thumb" style="background:#EEEDFE;">🎓</div>
+        <div class="news-body">
+          <span class="news-tag" style="background:#EEEDFE;color:#3C3489;">Campus</span>
+          <h3>Record 4,800 students graduate at summer ceremony</h3>
+          <p>May 2026</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-strip">
+    <h2>Ready to join Aldermoor?</h2>
+    <p>Applications for the 2026–27 academic year are now open.</p>
+    <a href="#" class="btn-primary">Start your application</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">© 2026 Aldermoor University. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Accessibility</a>
+      <a href="#">Contact</a>
+      <a href="#">Sitemap</a>
+    </div>
+  </footer>
+    <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">© 2026 Aldermoor University. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Accessibility</a>
+      <a href="#">Contact</a>
+      <a href="#">Sitemap</a>
+    </div>
+  </footer>
+
+  <!-- CHATBASE AI CHATBOT -->
+  <script>
+  (function(){
+    if(!window.chatbase || window.chatbase("getState") !== "initialized"){
+      window.chatbase = (...arguments) => {
+        if(!window.chatbase.q){
+          window.chatbase.q = []
+        }
+        window.chatbase.q.push(arguments)
+      };
+      window.chatbase = new Proxy(window.chatbase, {
+        get(target, prop){
+          if(prop === "q"){
+            return target.q
+          }
+          return (...args) => target(prop, ...args)
+        }
+      })
+    }
+
+    const onLoad = function(){
+      const script = document.createElement("script");
+      script.src = "https://www.chatbase.co/embed.min.js";
+      script.id = "39BrlBWSfDPuSFck4DqTr";
+      script.domain = "www.chatbase.co";
+      document.body.appendChild(script);
+    };
+
+    if(document.readyState === "complete"){
+      onLoad();
+    } else {
+      window.addEventListener("load", onLoad);
+    }
+  })();
+  </script>
+
+</body>
+</html>
+
+</body>
+</html>
